@@ -40,21 +40,20 @@ def prefDetails() {
 			input(name:"calNational", type: "enum", title: "National Holidays", options:state.nationalHolidays, required:false, multiple:true)
 			input(name:"calReligious", type: "enum", title: "Religious Holidays", options:state.religiousHolidays, required:false, multiple:true)
 			input(name:"calObservances", type: "enum", title: "Observances", options:state.observanceHolidays, required:false, multiple:true)
-			section("Custom Holidays") {
-				input("customHolidays", "bool", title: "Define custom holidays?",defaultValue: false, displayDuringSetup: true, submitOnChange: true)
-				if (customHolidays)
-				{
-					input(name: "customHolidayCount", type: "number", range: "1..366", title: "How many custom holidays?", required: true, submitOnChange: true)
-					if (customHolidayCount > 0)
-					{
-						for (def i = 0; i < customHolidayCount; i++)
-							input(name:"customHoliday${i}", type:"date", title: "Custom Holiday ${i+1}", required: true)
-					}
-				}
-			}
-			
-
         }
+        section("Custom Holidays") {
+            input("customHolidays", "bool", title: "Define custom holidays?",defaultValue: false, displayDuringSetup: true, submitOnChange: true)
+            if (customHolidays)
+            {
+                input(name: "customHolidayCount", type: "number", range: "1..366", title: "How many custom holidays?", required: true, submitOnChange: true)
+                if (customHolidayCount > 0)
+                {
+                    for (def i = 0; i < customHolidayCount; i++)
+                    input(name:"customHoliday${i}", type:"date", title: "Custom Holiday ${i+1}", required: true)
+                }
+            }
+        }
+
 		section ("Switches") {
 			input("holidaySwitches", "capability.switch", required: true, multiple: true)
 		}
@@ -357,7 +356,7 @@ def isCustomHoliday(year, month, day)
 	return false
 }
 
-def isHoliday(holidays, fulllist, year, month, day)
+def isHoliday(holidayList, fulllist, year, month, day)
 {
 	for (holiday in holidayList)
 	{
