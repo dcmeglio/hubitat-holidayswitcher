@@ -31,7 +31,9 @@ def prefAccount() {
 			input("calAPIToken", "text", title: "API Key", description: "API Key", required: true)
 			input("calCountry", "enum", title: "Country", description: "Country", options: countryList, required: true)
 		}
+		displayFooter()
 	}
+	
 }
 
 def prefDetails() {
@@ -61,6 +63,7 @@ def prefDetails() {
 		section ("Settings") {
 			input("debugOutput", "bool", title: "Enable debug logging?", defaultValue: true, displayDuringSetup: false, required: false)
 		}
+		displayFooter()
     }
 }
 
@@ -457,4 +460,16 @@ def logDebug(msg) {
     if (settings?.debugOutput) {
 		log.debug msg
 	}
+}
+
+def displayFooter(){
+	section() {
+		paragraph getFormat("line")
+		paragraph "<div style='color:#1A77C9;text-align:center'>Holiday Switcher<br><a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7LBRPJRLJSDDN&source=url' target='_blank'><img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg' border='0' alt='PayPal Logo'></a><br><br>Please consider donating. This app took a lot of work to make.<br>If you find it valuable, I'd certainly appreciate it!</div>"
+	}       
+}
+
+def getFormat(type, myText=""){			// Modified from @Stephack Code   
+    if(type == "line") return "<hr style='background-color:#1A77C9; height: 1px; border: 0;'>"
+    if(type == "title") return "<h2 style='color:#1A77C9;font-weight: bold'>${myText}</h2>"
 }
