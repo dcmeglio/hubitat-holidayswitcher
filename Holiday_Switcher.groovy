@@ -43,6 +43,8 @@ def prefDetails() {
 			input(name:"calNational", type: "enum", title: "National Holidays", options:state.nationalHolidays, required:false, multiple:true)
 			input(name:"calReligious", type: "enum", title: "Religious Holidays", options:state.religiousHolidays, required:false, multiple:true)
 			input(name:"calObservances", type: "enum", title: "Observances", options:state.observanceHolidays, required:false, multiple:true)
+			input(name:"calLocal", type: "enum", title: "Local Holidays", options:state.localHolidays, required:false, multiple:true)
+			
         }
         section("Custom Holidays") {
             input("customHolidays", "bool", title: "Define custom holidays?",defaultValue: false, displayDuringSetup: true, submitOnChange: true)
@@ -337,7 +339,8 @@ def checkHoliday()
 	
 	if (isHoliday(calNational, state.nationalHolidaysList, year, month, day) ||
 		isHoliday(calReligious, state.religiousHolidaysList, year, month, day) ||
-		isHoliday(calObservances, state.observanceHolidaysList, year, month, day) || isCustomHoliday(year, month, day))
+		isHoliday(calObservances, state.observanceHolidaysList, year, month, day)  ||
+		isHoliday(calLocal, state.localHolidaysList, year, month, day)  || isCustomHoliday(year, month, day))
 	{
 		holidaySwitches.on()
 	}
@@ -400,9 +403,11 @@ def getHolidays()
 	state.nationalHolidays = [:]
 	state.religiousHolidays = [:]
 	state.observanceHolidays = [:]
+	state.localHolidays = [:]
 	state.nationalHolidaysList = [:]
 	state.religiousHolidaysList = [:]
 	state.observanceHolidaysList = [:]
+	state.localHolidaysList = [:]
     def result = sendApiRequest("national", "GET")
 
 	if (result.status == 200) {
@@ -420,6 +425,12 @@ def getHolidays()
 	if (result.status == 200) {
 		state.observanceHolidays = extractHolidays(result.data.response.holidays)
 		state.observanceHolidaysList = extractHolidayDetails(result.data.response.holidays)
+	}
+	
+	result = sendApiRequest("local", "GET")
+	if (result.status == 200) {
+		state.localHolidays = extractHolidays(result.data.response.holidays)
+		state.localHolidaysList = extractHolidayDetails(result.data.response.holidays)
 	}
 }
 
