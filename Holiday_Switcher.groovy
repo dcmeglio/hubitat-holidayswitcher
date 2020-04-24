@@ -44,7 +44,6 @@ def prefDetails() {
 			input(name:"calReligious", type: "enum", title: "Religious Holidays", options:state.religiousHolidays, required:false, multiple:true)
 			input(name:"calObservances", type: "enum", title: "Observances", options:state.observanceHolidays, required:false, multiple:true)
 			input(name:"calLocal", type: "enum", title: "Local Holidays", options:state.localHolidays, required:false, multiple:true)
-			
         }
         section("Custom Holidays") {
             input("customHolidays", "bool", title: "Define custom holidays?",defaultValue: false, displayDuringSetup: true, submitOnChange: true)
@@ -340,7 +339,7 @@ def checkHoliday()
 	if (isHoliday(calNational, state.nationalHolidaysList, year, month, day) ||
 		isHoliday(calReligious, state.religiousHolidaysList, year, month, day) ||
 		isHoliday(calObservances, state.observanceHolidaysList, year, month, day)  ||
-		isHoliday(calLocal, state.localHolidaysList, year, month, day)  || isCustomHoliday(year, month, day))
+		isHoliday(calLocal, state.localHolidaysList, year, month, day) || isCustomHoliday(year, month, day))
 	{
 		holidaySwitches.on()
 	}
