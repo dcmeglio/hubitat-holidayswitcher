@@ -13,7 +13,8 @@
 			"name": "Holiday Switcher",
 			"namespace": "dcm.holiday",
 			"location": "https://raw.githubusercontent.com/dcmeglio/hubitat-holidayswitcher/master/Holiday_Switcher.groovy",
-			"required": true
+			"required": true,
+			"primary": true
 		}
 	]
 }
